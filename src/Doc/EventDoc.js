@@ -1,6 +1,8 @@
 import Doc from './Doc';
 import Parameter from './Parameter';
 
+const DOC_TYPE = 'event';
+
 export default class EventDoc extends Doc {
 
   /**
@@ -9,7 +11,7 @@ export default class EventDoc extends Doc {
    * @param {TagDict} params.tagdict
    */
   constructor(params) {
-    super('event', params.file);
+    super(DOC_TYPE, params.file);
     this._tagdict = params.tagdict;
     this._params = this._buildParameterDocs();
   }
@@ -24,7 +26,7 @@ export default class EventDoc extends Doc {
    * @return {string}
    */
   get name() {
-    return this._tagdict.get('object');
+    return this._tagdict.get('object').trim();
   }
 
   /**
@@ -62,7 +64,7 @@ export default class EventDoc extends Doc {
    */
   static parse(parsedFile) {
     return parsedFile.docComments.filter(docComment => {
-      return docComment.tagdict.has('event');
+      return docComment.tagdict.has(DOC_TYPE);
     }).map(docComment => {
       return new EventDoc({
         file: parsedFile,

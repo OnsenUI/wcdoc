@@ -1,5 +1,7 @@
 import Doc from './Doc';
 
+const DOC_TYPE = 'element';
+
 export default class ElementDoc extends Doc {
 
   /**
@@ -8,12 +10,12 @@ export default class ElementDoc extends Doc {
    * @param {TagDict} params.tagdict
    */
   constructor(params) {
-    super('element', params.file);
+    super(DOC_TYPE, params.file);
     this._tagdict = params.tagdict;
   }
 
   get name() {
-    return this._tagdict.get('element');
+    return this._tagdict.get(DOC_TYPE).trim();
   }
 
   get tagdict() {
@@ -34,7 +36,7 @@ export default class ElementDoc extends Doc {
    */
   static parse(parsedFile) {
     return parsedFile.docComments.filter(docComment => {
-      return docComment.tagdict.has('element');
+      return docComment.tagdict.has(DOC_TYPE);
     }).map(docComment => {
       return new ElementDoc({
         file: parsedFile,

@@ -4,6 +4,7 @@ import ElementDoc from './Doc/ElementDoc';
 import ObjectDoc from './Doc/ObjectDoc';
 import MethodDoc from './Doc/MethodDoc';
 import EventDoc from './Doc/EventDoc';
+import PropertyDoc from './Doc/PropertyDoc';
 import globby from 'globby';
 import async from 'async';
 
@@ -38,8 +39,9 @@ export function parse(code, path = '', config = {}) {
   const methods = MethodDoc.parse(parsed);
   const objects = ObjectDoc.parse(parsed);
   const events = EventDoc.parse(parsed);
+  const properties = PropertyDoc.parse(parsed);
 
-  return attributes.concat(elements).concat(methods).concat(objects).concat(events);
+  return [].concat(attributes, elements, methods, objects, events, properties);
 }
 
 /**

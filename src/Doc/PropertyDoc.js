@@ -1,52 +1,39 @@
 import Doc from './Doc';
+import Type from './Type';
 
-const DOC_TYPE = 'object';
+const DOC_TYPE = 'property';
 
-export default class ObjectDoc extends Doc {
+export default class PropertyDoc extends Doc {
 
   /**
    * @param {object} params
-   * @param {ParsedFile} params.file
    * @param {TagDict} params.tagdict
+   * @param {ParsedFile} params.file
    */
   constructor(params) {
     super(DOC_TYPE, params.file);
     this._tagdict = params.tagdict;
+    this._propertyType = this._buildTypeDoc();
   }
 
-  /**
-   * @return {string}
-   */
+  _buildTypeDoc() {
+    return this._tagdict.get('type');
+  }
+
   get name() {
     return this._tagdict.get(DOC_TYPE).trim();
   }
 
-  /**
-   * @return {TagDict}
-   */
   get tagdict() {
     return this._tagdict;
   }
 
-  /**
-   * @return {boolean}
-   */
   get isDeprecated() {
     return this._tagdict.has('deprecated');
   }
 
-  /**
-   * @return {string}
-   */
   get description() {
-    return this._tagdict.get('desc') || this._tagdict.get('description');
-  }
-
-  /**
-   * @return {Array}
-   */
-  get see() {
-    return this._tagdict.getMany('see');
+    return this._tagdict.get('description');
   }
 
   /**
@@ -57,7 +44,7 @@ export default class ObjectDoc extends Doc {
     return parsedFile.docComments.filter(docComment => {
       return docComment.tagdict.has(DOC_TYPE);
     }).map(docComment => {
-      return new ObjectDoc({
+      return new PropertyDoc({
         file: parsedFile,
         tagdict: docComment.tagdict
       });

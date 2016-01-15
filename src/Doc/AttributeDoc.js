@@ -1,5 +1,7 @@
 import Doc from './Doc';
 
+const DOC_TYPE = 'attribute';
+
 export default class AttributeDoc extends Doc {
 
   /**
@@ -8,12 +10,12 @@ export default class AttributeDoc extends Doc {
    * @param {TagDict} params.tagdict
    */
   constructor(params) {
-    super('attribute', params.file);
+    super(DOC_TYPE, params.file);
     this._tagdict = params.tagdict;
   }
 
   get name() {
-    return this._tagdict.get('attribute');
+    return this._tagdict.get(DOC_TYPE).trim();
   }
 
   get parameters() {
@@ -30,7 +32,7 @@ export default class AttributeDoc extends Doc {
    */
   static parse(parsedFile) {
     return parsedFile.docComments.filter(docComment => {
-      return docComment.tagdict.has('attribute');
+      return docComment.tagdict.has(DOC_TYPE);
     }).map(docComment => {
       return new AttributeDoc({
         file: parsedFile,

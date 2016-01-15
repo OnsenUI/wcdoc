@@ -2,6 +2,8 @@ import Doc from './Doc';
 import Parameter from './Parameter';
 import Returns from './Returns';
 
+const DOC_TYPE = 'method';
+
 export default class MethodDoc extends Doc {
 
   /**
@@ -10,7 +12,7 @@ export default class MethodDoc extends Doc {
    * @param {ParsedFile} params.file
    */
   constructor(params) {
-    super('method', params.file);
+    super(DOC_TYPE, params.file);
     this._tagdict = params.tagdict;
     this._params = this._buildParamDocs();
     this._returns = this._buildReturnDoc();
@@ -39,7 +41,7 @@ export default class MethodDoc extends Doc {
   }
 
   get name() {
-    return this._tagdict.get('object');
+    return this._tagdict.get(DOC_TYPE).trim();
   }
 
   get tagdict() {
@@ -60,7 +62,7 @@ export default class MethodDoc extends Doc {
    */
   static parse(parsedFile) {
     return parsedFile.docComments.filter(docComment => {
-      return docComment.tagdict.has('method');
+      return docComment.tagdict.has(DOC_TYPE);
     }).map(docComment => {
       return new MethodDoc({
         file: parsedFile,
