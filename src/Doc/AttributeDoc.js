@@ -18,6 +18,10 @@ export default class AttributeDoc extends Doc {
     return this._tagdict.get(DOC_TYPE).trim();
   }
 
+  get type() {
+    return this._tagdict.get('type');
+  }
+
   get parameters() {
     return this._tagdict.getMany('param');
   }

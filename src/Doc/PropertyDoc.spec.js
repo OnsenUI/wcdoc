@@ -21,7 +21,7 @@ describe('PropertyDoc', () => {
     assert(doc);
     assert(doc.file instanceof ParsedFile);
     assert.equal(doc.name, 'foobar');
-    assert.equal(doc.type, 'property');
+    assert.equal(doc.docType, 'property');
   });
 });
 

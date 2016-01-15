@@ -20,7 +20,7 @@ describe('Doc', () => {
 
     assert(doc);
     assert(doc.file instanceof ParsedFile);
-    assert(typeof doc.type === 'string');
+    assert(typeof doc.docType === 'string');
   });
 });
 

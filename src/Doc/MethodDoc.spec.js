@@ -21,7 +21,7 @@ describe('MethodDoc', () => {
     assert(doc);
     assert(doc.file instanceof ParsedFile);
     assert.equal(doc.name, 'foobar');
-    assert.equal(doc.type, 'method');
+    assert.equal(doc.docType, 'method');
   });
 });
 

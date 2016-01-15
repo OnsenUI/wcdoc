@@ -19,6 +19,7 @@ describe('ElementDoc', () => {
     const doc = ElementDoc.parse(file)[0];
 
     assert(doc);
+    assert(doc.docType, 'element');
     assert(doc.file instanceof ParsedFile);
   });
 });

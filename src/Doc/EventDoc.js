@@ -26,7 +26,7 @@ export default class EventDoc extends Doc {
    * @return {string}
    */
   get name() {
-    return this._tagdict.get('object').trim();
+    return this._tagdict.get('event').trim();
   }
 
   /**

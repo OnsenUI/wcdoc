@@ -3,11 +3,11 @@ import ParsedFile from '../ParsedFile';
 export default class Doc {
 
   /**
-   * @param {string} type
+   * @param {string} docType
    * @param {ParsedFile} file
    */
-  constructor(type, file) {
-    this._type = type;
+  constructor(docType, file) {
+    this._docType = docType;
     this._file = file;
 
     if (!(file instanceof ParsedFile)) {
@@ -15,8 +15,8 @@ export default class Doc {
     }
   }
 
-  get type() {
-    return this._type;
+  get docType() {
+    return this._docType;
   }
 
   get file() {

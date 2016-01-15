@@ -18,7 +18,7 @@ export default class PropertyDoc extends Doc {
     return this._tagdict.get(DOC_TYPE).trim();
   }
 
-  get propertyType() {
+  get type() {
     return this._tagdict.get('type');
   }
 
