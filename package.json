@@ -1,0 +1,44 @@
+{
+  "name": "wcdoc",
+  "version": "0.1.0",
+  "description": "Simple API Document Generator for Web Components",
+  "main": "out/WCDoc.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-register --recursive ./src/",
+    "build": "./node_modules/.bin/babel --out-dir out src",
+    "prepublish": "npm run build",
+    "clean": "rm -rf out/*"
+  },
+  "author": "Mitsunori KUBOTA",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OnsenUI/wcdoc"
+  },
+  "dependencies": {
+    "async": "^1.5.2",
+    "babel-cli": "^6.4.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "catharsis": "^0.8.7",
+    "esprima": "^2.7.1",
+    "estraverse": "^4.1.1",
+    "globby": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "power-assert": "^1.2.0"
+  },
+  "files": [
+    "README.md",
+    "index.js",
+    "package.json",
+    "out",
+    "test"
+  ]
+}
