@@ -1,18 +1,17 @@
-import Type from './Type';
 
 export default class Returns {
 
   /**
-   * @param {Type/null} type
+   * @param {string/null} type
    * @param {string} [description]
    */
   constructor(type, description = '') {
-    this._type = type;
+    this._type = typeof type === 'string' ? type : null;
     this._description = description;
   }
 
   /**
-   * @return {Type}
+   * @return {string/null}
    */
   get type() {
     return this._type;
@@ -36,9 +35,8 @@ export default class Returns {
     if (matches) {
       const typeString = matches[2];
       const description = (matches[4] || '').trim();
-      const parsedType = typeString ? Type.parse(typeString) : null;
 
-      return new Returns(parsedType, description);
+      return new Returns(typeString, description);
     } else {
       return new Returns(null, tagString);
     }

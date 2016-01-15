@@ -1,15 +1,14 @@
-import Type from './Type';
 
 export default class Parameter {
 
   /**
-   * @param {Type/null} type
+   * @param {string/null} type
    * @param {string} name
    * @param {boolean} isOptional
    * @param {string} [description]
    */
   constructor(type, name, isOptional, description = '') {
-    this._type = type;
+    this._type = typeof type === 'string' ? type : null;
     this._name = name;
     this._isOptional = isOptional;
     this._description = description;
@@ -24,7 +23,7 @@ export default class Parameter {
   }
 
   /**
-   * @return {Type}
+   * @return {string/null}
    */
   get type() {
     return this._type;
@@ -51,7 +50,7 @@ export default class Parameter {
       const description = (matches[4] || '').trim();
       const isOptional = name.substring(0, 1) === '[' && name.substring(-1, 0) === ']';
 
-      return new Parameter(Type.parse(typeString), name, isOptional, description);
+      return new Parameter(typeString, name, isOptional, description);
     } else {
       throw new Error('Fail to parse: ' + tagString);
     }

@@ -1,5 +1,4 @@
 import Doc from './Doc';
-import Type from './Type';
 
 const DOC_TYPE = 'property';
 
@@ -13,15 +12,14 @@ export default class PropertyDoc extends Doc {
   constructor(params) {
     super(DOC_TYPE, params.file);
     this._tagdict = params.tagdict;
-    this._propertyType = this._buildTypeDoc();
-  }
-
-  _buildTypeDoc() {
-    return this._tagdict.get('type');
   }
 
   get name() {
     return this._tagdict.get(DOC_TYPE).trim();
+  }
+
+  get propertyType() {
+    return this._tagdict.get('type');
   }
 
   get tagdict() {
