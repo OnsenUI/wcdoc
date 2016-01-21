@@ -6,6 +6,7 @@ describe('EventDoc', () => {
   const file = ParsedFile.parse(`
     /**
      * @event foobar
+     * @param {string} foo
      */
     class FoobarElement {
       // ...
@@ -20,6 +21,7 @@ describe('EventDoc', () => {
 
     assert(doc);
     assert(doc.file instanceof ParsedFile);
+    assert(doc.params);
     assert.equal(doc.name, 'foobar');
     assert.equal(doc.docType, 'event');
   });

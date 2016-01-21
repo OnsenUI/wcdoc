@@ -17,9 +17,7 @@ export default class EventDoc extends Doc {
   }
 
   _buildParameterDocs() {
-    return this._tagdict.getMany('param').map(tag => {
-      return Parameter.parse(tag);
-    });
+    return this._tagdict.getMany('param').map(tag => Parameter.parse(tag));
   }
 
   /**
@@ -27,6 +25,13 @@ export default class EventDoc extends Doc {
    */
   get name() {
     return this._tagdict.get(DOC_TYPE).trim();
+  }
+
+  /**
+   * @return {array}
+   */
+  get params() {
+    return this._params;
   }
 
   /**
