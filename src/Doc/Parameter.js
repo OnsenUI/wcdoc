@@ -41,14 +41,14 @@ export default class Parameter {
    * @return {Type}
    */
   static parse(tagString) {
-    const regex = /^\s*(\{([^}]+)}\s+)?(\S+)(\s+(.+))?$/m;
+    const regex = /^\s*(?:\{([^}]+)}\s+)?(\[?[-_a-zA-Z$]+]?)?(?:\s+(\S+))?\s*$/;
     const matches = tagString.match(regex);
 
     if (matches) {
-      const typeString = matches[2];
-      const name = matches[3];
-      const description = (matches[4] || '').trim();
-      const isOptional = name.substring(0, 1) === '[' && name.substring(-1, 0) === ']';
+      const typeString = matches[1];
+      const name = matches[2].replace(/^\[/, '').replace(/]$/, '');
+      const description = (matches[3] || '').trim();
+      const isOptional = matches[2].substring(0, 1) === '[' && matches[2].substring(-1, 0) === ']';
 
       return new Parameter(typeString, name, isOptional, description);
     } else {
