@@ -29,6 +29,8 @@ export default class Returns {
    * @return {Type}
    */
   static parse(tagString) {
+    tagString = '' + tagString;
+
     const regex = /^\s*(\{([^}]+)})?(\s*((?:.|\r|\n)+))?$/m;
     const matches = tagString.match(regex);
     

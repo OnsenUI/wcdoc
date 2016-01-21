@@ -5,8 +5,8 @@
   "main": "out/WCDoc.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register --recursive ./src/",
-    "build": "./node_modules/.bin/babel --out-dir out src",
-    "prepublish": "npm run build",
+    "build": "./node_modules/.bin/babel --out-dir out --source-maps inline src",
+    "prepublish": "npm run clean && npm run build",
     "clean": "rm -rf out/*"
   },
   "author": "Mitsunori KUBOTA",
