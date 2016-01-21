@@ -16,6 +16,8 @@ describe('Parameter', () => {
     assert.equal(Parameter.parse('{Object} [name]').name, 'name');
     assert.equal(Parameter.parse('{Object} name desc').description, 'desc');
     assert.equal(Parameter.parse('{Object} [name] desc').description, 'desc');
+
+    assert.equal(Parameter.parse('{Boolean} name This is a description.').description, 'This is a description.');
   });
 });
 
