@@ -41,7 +41,7 @@ export default class Parameter {
    * @return {Type}
    */
   static parse(tagString) {
-    const regex = /^\s*(?:\{([^}]+)}\s+)?(\[?[-_a-zA-Z$]+]?)?(?:\s+((?:.|\n|\r)+))?\s*$/;
+    const regex = /^\s*(?:\{([^}]+)}\s+)?(\[?\S+]?)?(?:\s+((?:.|\n|\r)+))?\s*$/;
     const matches = tagString.match(regex);
 
     if (matches) {

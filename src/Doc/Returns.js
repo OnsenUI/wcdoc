@@ -42,6 +42,5 @@ export default class Returns {
     } else {
       return new Returns(null, tagString);
     }
-
   }
 }
