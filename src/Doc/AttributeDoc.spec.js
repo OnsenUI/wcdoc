@@ -19,6 +19,7 @@ describe('AttributeDoc', () => {
     const doc = AttributeDoc.parse(file)[0];
 
     assert(doc);
+    assert(doc.tagdict);
     assert(doc.file instanceof ParsedFile);
     assert.equal(doc.name, 'foobar');
     assert.equal(doc.docType, 'attribute');

@@ -14,6 +14,10 @@ export default class AttributeDoc extends Doc {
     this._tagdict = params.tagdict;
   }
 
+  get tagdict() {
+    return this._tagdict;
+  }
+
   get name() {
     return this._tagdict.get(DOC_TYPE).trim();
   }
