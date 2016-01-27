@@ -12,6 +12,7 @@ describe('TagDict', () => {
     assert.ok(TagDict.parse({value: `@param {Object} hoge`, location: location}).get('param'));
     assert.ok(TagDict.parse({value: `description`, location: location}).get('description'));
     assert.ok(TagDict.parse({value: `description`, location: location}).get('desc'));
+    assert.ok(TagDict.parse({value: `@param hoge`, location: location}).get('foobar', true));
   });
 });
 

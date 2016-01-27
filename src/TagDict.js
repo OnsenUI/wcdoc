@@ -28,10 +28,11 @@ export default class TagDict {
 
   /**
    * @param {string} name
+   * @param {any} [defaultValue]
    * @return {string/null}
    */
-  get(name) {
-    return this._dict[name] ? this._dict[name][0] : null;
+  get(name, defaultValue = null) {
+    return this._dict[name] ? this._dict[name][0] : defaultValue;
   }
 
   /**
