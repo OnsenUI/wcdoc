@@ -5,7 +5,11 @@ import assert from 'power-assert';
 describe('ElementDoc', () => {
   const file = ParsedFile.parse(`
     /**
-     * @element foobar
+     * @element x-foobar
+     * @description Hello World!
+     * @example 
+     *   <x-foobar>
+     *   </x-foobar>
      */
     class FoobarElement {
       // ...
@@ -18,9 +22,14 @@ describe('ElementDoc', () => {
   it('should work normally', () => {
     const doc = ElementDoc.parse(file)[0];
 
-    assert(doc);
-    assert(doc.docType, 'element');
-    assert(doc.file instanceof ParsedFile);
+    assert.ok(doc);
+    assert.ok(doc.file instanceof ParsedFile);
+
+    assert.equal(doc.docType, 'element');
+    assert.equal(doc.name, 'x-foobar');
+    assert.equal(doc.description, 'Hello World!');
+    assert.equal(doc.isDeprecated, false);
+    assert.equal(doc.examples[0], '<x-foobar>\n</x-foobar>');
   });
 });
 

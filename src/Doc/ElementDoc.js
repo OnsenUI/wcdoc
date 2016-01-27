@@ -27,7 +27,11 @@ export default class ElementDoc extends Doc {
   }
 
   get description() {
-    return this._tagdict.get('description');
+    return this._tagdict.get('description', '').trim();
+  }
+
+  get examples() {
+    return this._tagdict.getMany('example').map(example => example.trim());
   }
 
   /**
