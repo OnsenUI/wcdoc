@@ -9,7 +9,7 @@ export default class TagDict {
       throw new Error('location parameter must be a object');
     }
 
-    this._dict = {};
+    this._dict = new Map();
     this._tags = [];
     this._location = location;
   }
@@ -23,7 +23,7 @@ export default class TagDict {
    * @return {array}
    */
   getMany(name) {
-    return this._dict[name] || [];
+    return this._dict.get(name) || [];
   }
 
   /**
@@ -32,7 +32,11 @@ export default class TagDict {
    * @return {string/null}
    */
   get(name, defaultValue = null) {
-    return this._dict[name] ? this._dict[name][0] : defaultValue;
+    if (this._dict.has(name) && this._dict.get(name).length > 0) {
+      return this._dict.get(name)[0];
+    }
+
+    return defaultValue;
   }
 
   /**
@@ -52,11 +56,11 @@ export default class TagDict {
       value: value
     });
 
-    if (!this._dict[name]) {
-      this._dict[name] = [];
+    if (!this._dict.has(name)) {
+      this._dict.set(name, []);
     }
 
-    this._dict[name].push(value);
+    this._dict.get(name).push(value);
   }
   
   /** 
@@ -64,7 +68,7 @@ export default class TagDict {
    * @return {boolean}
    */
   has(name) {
-    return !!this._dict[name];
+    return this._dict.has(name);
   }
 
   /**
