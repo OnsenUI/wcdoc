@@ -52,7 +52,7 @@ export default class ParsedFile {
       })
       .map(function(comment) {
         return {
-          value: comment.value.slice(1).replace(/^ *\*+ */gm, ''), // remove extra spaces and '*'
+          value: comment.value.slice(1).replace(/^ *\*+ ?/gm, ''), // remove extra spaces and '*'
           location: comment.loc,
         };
       })
