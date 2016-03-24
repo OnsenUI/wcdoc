@@ -75,6 +75,19 @@ export default class TagDict {
    */
   static parse(comment) {
 
+    const normalize = str => {
+      const lines = str.replace(/\s+$/mg, '').split(/\r\n|\r|\n/);
+
+      const spaceLength = lines.filter(line => {
+        return line.length > 0 && line.match(/\S/);
+      }).map(line => {
+        const matches = line.match(/^\s*/);
+        return matches[0].length;
+      }).sort((left, right) => left - right)[0] || 0;
+
+      return lines.map(line => line.slice(spaceLength)).join('\n');
+    };
+
     if (typeof comment.value !== 'string') {
       throw new Error();
     }
@@ -84,16 +97,12 @@ export default class TagDict {
 
     const dict = new TagDict(comment.location);
     matches = comment.value.match(/^([^@]+)/);
-    const regex = /\s*(?:@([-_a-zA-Z0-9]+))\s*([^@]*)/g;
+    const regex = /\s*(?:@([-_a-zA-Z0-9]+))(?: |\t)*(?:\r\n|\n|\r)*(\s*[^@]*)/g;
+
+    const headerDescription = matches ? matches[0] : '';
 
     if (matches) {
       lastIndex = regex.lastIndex = matches[0].length;
-
-      const headerDescription = matches[0].trim();
-      if (headerDescription.length > 0) {
-        dict._add('description', headerDescription);
-        dict._add('desc', headerDescription);
-      }
     }
 
     while (matches = regex.exec(comment.value)) {
@@ -102,9 +111,14 @@ export default class TagDict {
       const value = typeof matches[2] === 'string' ? matches[2] : '';
 
       if (typeof name === 'string') {
-        dict._add(name, value.trim());
+        dict._add(name, normalize(value));
       } 
     }
+
+    if (!dict.has('description') && headerDescription.length > 0) {
+      dict._add('description', normalize(headerDescription));
+    }
+
 
     if (comment.value.length === lastIndex) {
       return dict;

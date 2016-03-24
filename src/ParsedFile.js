@@ -47,21 +47,20 @@ export default class ParsedFile {
 
   static _buildDocComments(ast) {
     return (ast.comments || [])
-      .filter(function(comment) {
-        return comment.value.substr(0, 1) === '*';
-      })
-      .map(function(comment) {
+      .filter(comment => comment.value.substr(0, 1) === '*')
+      .map(comment => {
         return {
-          value: comment.value.slice(1).replace(/^ *\*+ ?/gm, ''), // remove extra spaces and '*'
+          value: comment.value.slice(1).replace(/^ *\*+/mg, ''), // remove extra spaces and '*'
           location: comment.loc,
         };
       })
-      .map(function(comment) {
+      .map(comment => {
         comment.tagdict = TagDict.parse(comment);
 
         return comment;
       });
   }
+
 
   /**
    * @param {string} code
