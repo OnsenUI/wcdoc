@@ -18,6 +18,7 @@ describe('TagDict', () => {
     assert.equal(TagDict.parse({value: `hoge @description foobar`, location: location}).get('description'), 'foobar');
     assert.equal(TagDict.parse({value: `@description foobar`, location: location}).get('description'), 'foobar');
     assert.equal(TagDict.parse({value: `@description foo\nbar`, location: location}).get('description'), 'foo\nbar');
+    assert.equal(TagDict.parse({value: `@push foo`, location: location}).get('push'), 'foo');
   });
 });
 
