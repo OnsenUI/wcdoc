@@ -1,6 +1,11 @@
 CHANGELOG
 ====
 
+v0.1.13
+----
+
+ * Changed to use Map instead of Object to fix TagDict error on 'constructor' tag.
+
 v0.1.10
 ----
 
