@@ -8,6 +8,7 @@ describe('wcdoc', () => {
       basePath: __dirname
     }).then(function(result) {
       assert.ok(result.length > 0);
+      //console.log(result);
       done();
     });
   });
