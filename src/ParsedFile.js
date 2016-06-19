@@ -21,7 +21,6 @@ export default class ParsedFile {
     }
 
     this._code = params.code || '';
-    this._ast = params.ast;
     this._path = params.path;
     this._docComments = params.docComments || [];
     this._relativePath = params.relativePath;
@@ -33,10 +32,6 @@ export default class ParsedFile {
 
   get path() {
     return this._path;
-  }
-
-  get ast() {
-    return this._ast;
   }
 
   get docComments() {
@@ -94,7 +89,6 @@ export default class ParsedFile {
     const params = {
       code: code,
       path: options.path ? resolve(options.path) : undefined,
-      ast: ast,
       docComments: docComments
     };
 
@@ -117,15 +111,12 @@ export default class ParsedFile {
     }
 
     if (options.path && options.path.endsWith('.ts')) {
-      const sourceFile = ts.createSourceFile(options.path, code, ts.ScriptTarget.ES6, true);
       const relativePath = relative(resolve(options.basePath), options.path);
-
       const comments = ParsedFile._buildTSDocComments(parseTS(code));
 
       return new ParsedFile({
         path: options.path,
         relativePath: relativePath,
-        ast: sourceFile.statements,
         docComments: comments,
         code: code
       });

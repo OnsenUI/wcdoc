@@ -17,7 +17,6 @@ describe('ParsedFile', () => {
     `, {path: __dirname + '/index.ts', basePath: __dirname});
 
     assert(file);
-    assert(file.ast);
     assert.equal(typeof file.path, 'string');
     assert.equal(typeof file.code, 'string');
     assert.equal(typeof file.docComments.length, 'number');
@@ -34,7 +33,6 @@ describe('ParsedFile', () => {
     `, {path: __dirname + '/index.js', basePath: __dirname});
 
     assert(file);
-    assert(file.ast);
     assert.equal(typeof file.path, 'string');
     assert.equal(typeof file.code, 'string');
     assert.equal(typeof file.docComments.length, 'number');
