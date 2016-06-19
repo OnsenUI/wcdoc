@@ -30,7 +30,6 @@ describe('ElementDoc', () => {
     assert.equal(doc.name, 'x-foobar');
     assert.equal(doc.isDeprecated, false);
     assert.equal(doc.examples[0], '<x-foobar>\n  content\n</x-foobar>');
-    console.log('???', doc.tagdict);
     assert.equal(doc.description, 'Hello World!');
   });
 });

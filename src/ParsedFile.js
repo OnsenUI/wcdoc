@@ -4,6 +4,8 @@ import esprima from 'esprima';
 import estraverse from 'estraverse';
 import TagDict from './TagDict';
 import {relative, resolve} from 'path';
+import * as ts from 'typescript';
+import {parse as parseTS} from './TypeScriptParser';
 
 export default class ParsedFile {
   /**
@@ -61,14 +63,23 @@ export default class ParsedFile {
       });
   }
 
+  static _buildTSDocComments(comments) {
+    return comments
+      .map(comment => {
+        const text = comment.text.substring(3, comment.text.length - 2).replace(/^ *\*+/mg, '');
+        return {
+          value: text,
+          location: {start: comment.start, end: comment.end}
+        };
+      })
+      .map(comment => {
+        comment.tagdict = TagDict.parse(comment);
 
-  /**
-   * @param {string} code
-   * @param {Object} options
-   * @param {string} options.path
-   * @param {string} options.basePath
-   */
-  static parse(code, options = {}) {
+        return comment;
+      });
+  }
+
+  static _parseJS(code, options = {}) {
     const ast = esprima.parse(code, {
       loc: true,
       range: true,
@@ -92,6 +103,31 @@ export default class ParsedFile {
     }
 
     return new ParsedFile(params);
+  }
+
+  /**
+   * @param {string} code
+   * @param {Object} options
+   * @param {string} options.path
+   * @param {string} options.basePath
+   */
+  static parse(code, options = {}) {
+    if (options.path && options.path.endsWith('.ts')) {
+      const sourceFile = ts.createSourceFile(options.path, code, ts.ScriptTarget.ES6, true);
+      const relativePath = relative(resolve(options.basePath), options.path);
+
+      const comments = ParsedFile._buildTSDocComments(parseTS(code));
+
+      return new ParsedFile({
+        path: options.path,
+        relativePath: relativePath,
+        ast: sourceFile.statements,
+        docComments: comments,
+        code: code
+      });
+    } else {
+      return ParsedFile._parseJS(code, options);
+    }
   }
 }
 

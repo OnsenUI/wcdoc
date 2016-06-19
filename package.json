@@ -9,7 +9,7 @@
     "prepublish": "npm run clean && npm run build",
     "clean": "rm -rf out/*"
   },
-  "author": "Mitsunori KUBOTA",
+  "author": "Mitsunori KUBOTA <mitsunori@asial.co.jp>",
   "licenses": [
     {
       "type": "Apache-2.0",
@@ -27,7 +27,8 @@
     "babel-register": "^6.3.13",
     "esprima": "^2.7.1",
     "estraverse": "^4.1.1",
-    "globby": "^4.0.0"
+    "globby": "^4.0.0",
+    "typescript": "^1.8.10"
   },
   "devDependencies": {
     "mocha": "^2.3.4",
