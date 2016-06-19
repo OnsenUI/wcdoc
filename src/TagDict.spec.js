@@ -10,15 +10,15 @@ describe('TagDict', () => {
 
     assert.ok(TagDict.parse({value: `aaa`, location: location}));
     assert.ok(TagDict.parse({value: `@param {Object} hoge`, location: location}).get('param'));
-    assert.ok(TagDict.parse({value: `description`, location: location}).get('description'));
-    assert.ok(TagDict.parse({value: `description`, location: location}).get('desc'));
+    assert.equal(TagDict.parse({value: `description`, location: location}).get('description'), 'description');
     assert.ok(TagDict.parse({value: `@param hoge`, location: location}).get('foobar', true));
     assert.ok(TagDict.parse({value: `@param hoge`, location: location}).has('param'));
     assert.ok(!TagDict.parse({value: `@param hoge`, location: location}).has('foobar'));
-    assert.equal(TagDict.parse({value: `hoge @description foobar`, location: location}).get('description'), 'hoge');
+    assert.equal(TagDict.parse({value: `hoge`, location: location}).get('description'), 'hoge');
+    assert.equal(TagDict.parse({value: `hoge @description foobar`, location: location}).get('description'), 'foobar');
     assert.equal(TagDict.parse({value: `@description foobar`, location: location}).get('description'), 'foobar');
     assert.equal(TagDict.parse({value: `@description foo\nbar`, location: location}).get('description'), 'foo\nbar');
-    assert.equal(TagDict.parse({value: `@constructor foobar`, location: location}).get('constructor'), 'foobar');
+    assert.equal(TagDict.parse({value: `@constructor foo`, location: location}).get('constructor'), 'foo');
   });
 });
 

@@ -1,6 +1,6 @@
 {
   "name": "wcdoc",
-  "version": "0.1.10",
+  "version": "0.1.13",
   "description": "Simple API Document Generator for Web Components",
   "main": "out/WCDoc.js",
   "scripts": {

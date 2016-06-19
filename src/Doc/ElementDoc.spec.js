@@ -9,6 +9,7 @@ describe('ElementDoc', () => {
      * @description Hello World!
      * @example 
      *   <x-foobar>
+     *     content
      *   </x-foobar>
      */
     class FoobarElement {
@@ -27,9 +28,10 @@ describe('ElementDoc', () => {
 
     assert.equal(doc.docType, 'element');
     assert.equal(doc.name, 'x-foobar');
-    assert.equal(doc.description, 'Hello World!');
     assert.equal(doc.isDeprecated, false);
-    assert.equal(doc.examples[0], '<x-foobar>\n</x-foobar>');
+    assert.equal(doc.examples[0], '<x-foobar>\n  content\n</x-foobar>');
+    console.log('???', doc.tagdict);
+    assert.equal(doc.description, 'Hello World!');
   });
 });
 
