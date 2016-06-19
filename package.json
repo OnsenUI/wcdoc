@@ -4,7 +4,7 @@
   "description": "Simple API Document Generator for Web Components",
   "main": "out/WCDoc.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register --recursive ./src/",
+    "test": "mocha --compilers js:babel-register --recursive ./src/ ./test/spec",
     "build": "./node_modules/.bin/babel --out-dir out --source-maps inline src",
     "prepublish": "npm run clean && npm run build",
     "clean": "rm -rf out/*"

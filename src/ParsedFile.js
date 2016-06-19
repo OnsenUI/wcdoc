@@ -112,6 +112,10 @@ export default class ParsedFile {
    * @param {string} options.basePath
    */
   static parse(code, options = {}) {
+    if (typeof code !== 'string') {
+      throw Error('"code" parameter should be a string.');
+    }
+
     if (options.path && options.path.endsWith('.ts')) {
       const sourceFile = ts.createSourceFile(options.path, code, ts.ScriptTarget.ES6, true);
       const relativePath = relative(resolve(options.basePath), options.path);

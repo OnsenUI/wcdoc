@@ -15,7 +15,7 @@ import async from 'async';
  */
 export function parseFile(path, config) {
   return new Promise((done, fail) => {
-    require('fs').readFile(path, (error, code) => {
+    require('fs').readFile(path, 'utf-8', (error, code) => {
       if (error) {
         fail(error);
       } else {
