@@ -5,6 +5,9 @@ import ObjectDoc from './Doc/ObjectDoc';
 import MethodDoc from './Doc/MethodDoc';
 import EventDoc from './Doc/EventDoc';
 import PropertyDoc from './Doc/PropertyDoc';
+import OutputDoc from './Doc/OutputDoc';
+import InputDoc from './Doc/InputDoc';
+import DirectiveDoc from './Doc/DirectiveDoc';
 import globby from 'globby';
 import async from 'async';
 
@@ -15,7 +18,7 @@ import async from 'async';
  */
 export function parseFile(path, config) {
   return new Promise((done, fail) => {
-    require('fs').readFile(path, (error, code) => {
+    require('fs').readFile(path, 'utf-8', (error, code) => {
       if (error) {
         fail(error);
       } else {
@@ -34,14 +37,18 @@ export function parseFile(path, config) {
 export function parse(code, path = '', config = {}) {
   const parsed = ParsedFile.parse(code, {path: path, basePath: config.basePath || process.cwd()});
 
-  const attributes = AttributeDoc.parse(parsed);
-  const elements = ElementDoc.parse(parsed);
-  const methods = MethodDoc.parse(parsed);
-  const objects = ObjectDoc.parse(parsed);
-  const events = EventDoc.parse(parsed);
-  const properties = PropertyDoc.parse(parsed);
 
-  return [].concat(attributes, elements, methods, objects, events, properties);
+  return [].concat(
+    AttributeDoc.parse(parsed),
+    ElementDoc.parse(parsed),
+    MethodDoc.parse(parsed),
+    ObjectDoc.parse(parsed),
+    EventDoc.parse(parsed),
+    PropertyDoc.parse(parsed),
+    DirectiveDoc.parse(parsed),
+    InputDoc.parse(parsed),
+    OutputDoc.parse(parsed)
+  );
 }
 
 /**

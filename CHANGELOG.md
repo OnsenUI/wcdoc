@@ -1,6 +1,13 @@
 CHANGELOG
 ====
 
+v0.1.14
+----
+
+ * Removed ParsedFile#ast.
+ * Enabled to parse typescript.
+ * Added DirectiveDoc, InputDoc and OutputDoc for Angular directives.
+
 v0.1.13
 ----
 
