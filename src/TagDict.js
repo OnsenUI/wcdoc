@@ -6,7 +6,7 @@ export default class TagDict {
    */
   constructor(location) {
     if (typeof location !== 'object') {
-      throw new Error('location parameter must be a object');
+      throw new Error('location parameter must be an object');
     }
 
     this._dict = new Map();
@@ -68,6 +68,32 @@ export default class TagDict {
   }
 
   /**
+   * @param {string} str
+   * @return {Array}
+   */
+  static _parseTags(str) {
+    const tagRegex = /^[ \t]*@([-_a-z]+)/mg;
+    const tags = [];
+
+    let matches;
+    while (matches = tagRegex.exec(str)) {
+      tags.push({
+        name: matches[1],
+        start: matches.index,
+        end: matches.index + matches[0].length
+      });
+    }
+
+    tags.forEach((tag, i) => {
+      const commentStart = tag.end;
+      const commentEnd = tags[i + 1] ? tags[i + 1].start : str.length;
+      tag.value = str.substring(commentStart, commentEnd).replace(/^[ \t]+(\r|\n|\r\n)?/, '');
+    });
+
+    return tags;
+  }
+
+  /**
    * @param {object} comment
    * @param {string} comment.value
    * @param {number} comment.location
@@ -76,8 +102,10 @@ export default class TagDict {
   static parse(comment) {
 
     const normalize = str => {
+      // Remove line tail spaces and split to lines.
       const lines = str.replace(/\s+$/mg, '').split(/\r\n|\r|\n/);
 
+      // Count minimum line header spaces.
       const spaceLength = lines.filter(line => {
         return line.length > 0 && line.match(/\S/);
       }).map(line => {
@@ -85,6 +113,7 @@ export default class TagDict {
         return matches[0].length;
       }).sort((left, right) => left - right)[0] || 0;
 
+      // Removed the header spaces.
       return lines.map(line => line.slice(spaceLength)).join('\n');
     };
 
@@ -92,38 +121,22 @@ export default class TagDict {
       throw new Error();
     }
 
-    let matches;
-    let lastIndex = 0;
-
     const dict = new TagDict(comment.location);
-    matches = comment.value.match(/^([^@]+)/);
-    const regex = /\s*(?:@([-_a-zA-Z0-9]+))(?: |\t)*(?:\r\n|\n|\r)*(\s*[^@]*)/g;
+    const tags = TagDict._parseTags(comment.value);
 
-    const headerDescription = matches ? matches[0] : '';
+    tags.forEach(({name, value}) => {
+      dict._add(name, normalize(value));
+    });
 
-    if (matches) {
-      lastIndex = regex.lastIndex = matches[0].length;
+    if (!dict.has('description')) {
+      if (tags.length === 0) {
+        dict._add('description', normalize(comment.value));
+      } else {
+        const headerDescription = comment.value.substring(0, tags[0].start);
+        dict._add('description', normalize(headerDescription));
+      }
     }
 
-    while (matches = regex.exec(comment.value)) {
-      lastIndex = regex.lastIndex;
-      const name = matches[1];
-      const value = typeof matches[2] === 'string' ? matches[2] : '';
-
-      if (typeof name === 'string') {
-        dict._add(name, normalize(value));
-      } 
-    }
-
-    if (!dict.has('description') && headerDescription.length > 0) {
-      dict._add('description', normalize(headerDescription));
-    }
-
-
-    if (comment.value.length === lastIndex) {
-      return dict;
-    } else {
-      throw new Error('Fail to parse this doc comment: ' + comment.value);
-    }
+    return dict;
   }
 }
