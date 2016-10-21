@@ -1,6 +1,6 @@
 import globby from 'globby';
 import fs from 'fs';
-import esprima from 'esprima';
+import espree from 'espree';
 import estraverse from 'estraverse';
 import TagDict from './TagDict';
 import {relative, resolve} from 'path';
@@ -75,13 +75,17 @@ export default class ParsedFile {
   }
 
   static _parseJS(code, options = {}) {
-    const ast = esprima.parse(code, {
+    const ast = espree.parse(code, {
       loc: true,
       range: true,
       raw: false,
       tokens: true,
       comment: true,
-      tolerant: true
+      tolerant: true,
+      ecmaVersion: 7,
+      ecmaFeatures: {
+        experimentalObjectRestSpread: true
+      }
     });
 
     const docComments = ParsedFile._buildDocComments(ast);
