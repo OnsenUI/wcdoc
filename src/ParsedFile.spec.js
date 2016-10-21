@@ -40,5 +40,16 @@ describe('ParsedFile', () => {
     assert.ok(file.docComments[0].tagdict);
     assert.equal(file.relativePath, 'index.js');
   });
+
+  it('should parse object spread operator', () => {
+    const file = ParsedFile.parse(`
+      /** This is a doc comment. */
+      const a = {foo: 'bar'};
+      const b = {...a};
+    `, {path: __dirname + '/index.js', basePath: __dirname});
+
+    assert(file);
+    assert.equal(file.docComments.length, 1);
+  });
 });
 
