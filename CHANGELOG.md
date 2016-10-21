@@ -1,6 +1,11 @@
 CHANGELOG
 ====
 
+v0.1.17
+----
+
+ * Replaced esprima with espree.
+
 v0.1.14
 ----
 
