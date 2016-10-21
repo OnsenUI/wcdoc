@@ -82,6 +82,7 @@ export default class ParsedFile {
       tokens: true,
       comment: true,
       tolerant: true,
+      sourceType: 'module',
       ecmaVersion: 7,
       ecmaFeatures: {
         experimentalObjectRestSpread: true
