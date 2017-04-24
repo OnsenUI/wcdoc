@@ -22,7 +22,7 @@ export function parseFile(path, config) {
       if (error) {
         fail(error);
       } else {
-        done(parse(code, path));
+        done(parse(code, path, config));
       }
     });
   });
@@ -33,9 +33,10 @@ export function parseFile(path, config) {
  * @param {string} [path]
  * @param {Object} [config]
  * @param {string} [config.basePath]
+ * @param {Object} [config.espreeConfig]
  */
 export function parse(code, path = '', config = {}) {
-  const parsed = ParsedFile.parse(code, {path: path, basePath: config.basePath || process.cwd()});
+  const parsed = ParsedFile.parse(code, {path: path, basePath: config.basePath || process.cwd(), espreeConfig: config.espreeConfig});
 
 
   return [].concat(
@@ -55,6 +56,7 @@ export function parse(code, path = '', config = {}) {
  * @param {Object} config
  * @param {Array} config.src
  * @param {string} config.basePath
+ * @param {Object} config.espreeConfig
  */
 export function run(config) {
   return new Promise((resolve, abort) => {

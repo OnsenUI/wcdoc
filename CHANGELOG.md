@@ -5,6 +5,7 @@ dev
 ----
 
  * Updated the value of `ecmaVersion` for Espree.
+ * Added a new config `espreeConfig` to `wcdoc.run`.
 
 v0.1.17
 ----

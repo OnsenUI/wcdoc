@@ -86,7 +86,8 @@ export default class ParsedFile {
       ecmaVersion: 8,
       ecmaFeatures: {
         experimentalObjectRestSpread: true
-      }
+      },
+      ...options.espreeConfig // override defaults
     });
 
     const docComments = ParsedFile._buildDocComments(ast);
@@ -109,6 +110,7 @@ export default class ParsedFile {
    * @param {Object} options
    * @param {string} options.path
    * @param {string} options.basePath
+   * @param {Object} options.espreeConfig
    */
   static parse(code, options = {}) {
     if (typeof code !== 'string') {
