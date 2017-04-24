@@ -1,6 +1,11 @@
 CHANGELOG
 ====
 
+dev
+----
+
+ * Updated the value of `ecmaVersion` for Espree.
+
 v0.1.17
 ----
 
