@@ -25,8 +25,8 @@ wcdoc.run({
 
 ## Running tests
 
-Install dev dependencies:
+Install locked dev dependencies with [Yarn](https://yarnpkg.com/):
 
 ```sh
-$ npm install -d && npm test
+$ yarn install && yarn test
 ```
