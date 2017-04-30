@@ -36,9 +36,6 @@
     "power-assert": "^1.2.0"
   },
   "files": [
-    "README.md",
-    "index.js",
-    "package.json",
     "out",
     "test"
   ]
