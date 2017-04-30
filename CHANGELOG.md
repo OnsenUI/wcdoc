@@ -1,7 +1,7 @@
 CHANGELOG
 ====
 
-dev
+v0.1.19
 ----
 
  * Updated the value of `ecmaVersion` for Espree.
